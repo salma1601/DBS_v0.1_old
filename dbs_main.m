@@ -1,4 +1,4 @@
-function dbs = dbs_main(setmat, label, hypoTest, direction, numperm, thrClst)
+function dbs = dbs_main(setmat, label, hypoTest, direction, numPerm, thrClst)
 % DBS_MAIN    FWE correction using Degree-based statistics (DBS) in connectivity analysis
 % ================================================================================================================ 
 % [ INPUTS ]
@@ -21,7 +21,7 @@ function dbs = dbs_main(setmat, label, hypoTest, direction, numperm, thrClst)
 %          1: g1 > g2 (one-tail)
 %         -1: g2 < g1 (one-tail)
 % 
-%     numperm = the number of permutations performed for family (default = 5000).
+%     numPerm = the number of permutations performed for family (default = 5000).
 % 
 %     thrClst = DBS-based FWE-corrected cluster-level threshold for significance  (default = 0.05) 
 % ----------------------------------------------------------------------------------------------------------------
@@ -55,9 +55,9 @@ if nargin < 3; error('Must input at least three parameters.\n'); end
 if ~exist('direction'); direction = 0; 
 elseif isempty(direction); direction = 0; end;
 
-if ~exist('numperm'); numperm = 5000; 
-elseif isempty(numperm); numperm = 5000;
-else	if numperm < 1000; warning('You should run permutations more for the exact estimation (e.g. 1,000, 5,000, 10,000 times, or more.)'); end; end;
+if ~exist('numPerm'); numPerm = 5000; 
+elseif isempty(numPerm); numPerm = 5000;
+else	if numPerm < 1000; warning('You should run permutations more for the exact estimation (e.g. 1,000, 5,000, 10,000 times, or more.)'); end; end;
 
 if ~exist('thrClst'); thrClst = 0.05; 
 elseif isempty(thrClst); thrClst = 0.05; 
@@ -77,9 +77,9 @@ icft.s.range =icft_temp;
 
 %% Permutations for correction
 tic;     
-[perm_result] = dbs_perm(setmat, label, numperm, hypoTest, direction, icft, pwr);
+[perm_result] = dbs_perm(setmat, label, numPerm, hypoTest, direction, icft, pwr);
 
-thrClst1 = ceil(thrClst*numperm); thrClst2 = floor(thrClst*numperm);
+thrClst1 = ceil(thrClst*numPerm); thrClst2 = floor(thrClst*numPerm);
 for thre = 1 : length(icft.s.range)
     dbs_thre.bd.thre{thre,1} = perm_result.bd.max_sort{thre}(thrClst2);
     dbs_thre.wd.thre{thre,1} = perm_result.wd.max_sort{thre}(thrClst1);
@@ -92,7 +92,7 @@ dbs = dbs_correction(dbs_thre, icft, s, p);
 dbs.bd.max_sort = perm_result.bd.max_sort;    dbs.wd.max_sort = perm_result.wd.max_sort;
 
 %% Calculate Center Persistency (CP) score
-cp_result = dbs_cal_cp (numNode, numperm, thrClst, icft.s.range, dbs, perm_result.cp, pwr);
+cp_result = dbs_cal_cp (numNode, numPerm, thrClst, icft.s.range, dbs, perm_result.cp, pwr);
 dbs.cp = cp_result;
 
 %% Finish process

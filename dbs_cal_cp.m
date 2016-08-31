@@ -9,7 +9,7 @@ function cp = dbs_cal_cp (numNode, numperm, thrClst, initthre_range, dbs, perm_c
 % [ OUTPUTS ]
 %     cp
 % ----------------------------------------------------------------------------------------------------------------
-% Last update: Aug 30, 2016.
+% Last update: Aug 31, 2016.
 % 
 % Copyright 2016. Kwangsun Yoo (K Yoo), PhD
 %     E-mail: rayksyoo@gmail.com / raybeam@kaist.ac.kr
@@ -18,10 +18,6 @@ function cp = dbs_cal_cp (numNode, numperm, thrClst, initthre_range, dbs, perm_c
 %     Korea Advanced Instititue of Science and Technology (KAIST)
 %     Daejeon, Republic of Korea
 % ================================================================================================================
-
-for thre = 1 : length(initthre_range)
-    cp.bd_max(thre,1) = dbs.bd.thre{thre};
-end
 
 for thre_limit = 2 : length(initthre_range)
     cpMat = dbs_estm_cp(dbs.wd.org, initthre_range, thre_limit, numNode, pwr);
@@ -50,11 +46,8 @@ for thre_limit = 2 : length(initthre_range)
     cp.clst{thre_limit,1}(:,2) = cp.org{thre_limit}(cp.org_sig{thre_limit} > 0);
     
     for i_cp = 1: size(cp.clst{thre_limit}, 1)
-        i_find = length(initthre_range);
-        while i_find > 0
-            if find(dbs.wd.clst{i_find}(:,1) == cp.clst{thre_limit}(i_cp,1))
-                break; end;
-            i_find = i_find-1; end;
-        cp.clstnode{thre_limit,1}{i_cp,1}(:,1) = find(dbs.s{i_find}(cp.clst{thre_limit}(i_cp,1), :) > 0);
+        for i_thre = 1:thre_limit
+            cp.clstnode{thre_limit,1}{i_thre,i_cp}(:,1) = find(dbs.s{i_thre}(cp.clst{thre_limit}(i_cp,1), :) > 0);
+        end
     end;
 end;
