@@ -35,7 +35,7 @@ function dbs = dbs_main(setmat, label, hypoTest, direction, numperm, thrClst)
 %     dbs.time = time taken to run DBS analysis
 %     dbs.icft = a range of initial cluster-forming thresholds in analysis 
 % ----------------------------------------------------------------------------------------------------------------
-% Last update: Aug 30, 2016.
+% Last update: Aug 31, 2016.
 % 
 % Copyright 2016. Kwangsun Yoo (K Yoo), PhD
 %     E-mail: rayksyoo@gmail.com / raybeam@kaist.ac.kr
@@ -98,5 +98,5 @@ dbs.cp = cp_result;
 %% Finish process
 dbs.icft = icft;
 dbs.time{1} = temp;     dbs.time{2,1} = clock;
-fprintf('\n\t\t%d, %d/%d, %d:%2.0f:%2.0f\tProcess done\n\n', dbs.time{2})
+fprintf('\t\t%d, %d/%d, %d:%2.0f:%2.0f\tProcess done\n\n', dbs.time{2})
 

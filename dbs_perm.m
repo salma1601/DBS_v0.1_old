@@ -27,7 +27,7 @@ function [dbs_perm] = dbs_perm(setmat, label, numperm, hypotest, direction, icft
 % [ OUTPUTS ]
 %     dbs_perm
 % ----------------------------------------------------------------------------------------------------------------
-% Last update: Aug 30, 2016.
+% Last update: Aug 31, 2016.
 % 
 % Copyright 2016. Kwangsun Yoo (K Yoo), PhD
 %     E-mail: rayksyoo@gmail.com / raybeam@kaist.ac.kr
@@ -75,4 +75,4 @@ for thre = 1:length(icft.s.range)
     dbs_perm.wd.max_sort{thre,1} = sort(dbs_perm.wd.max{thre,1}, 'descend');
 end
 
-fprintf('\t\t[ %d permutations done ]', i_perm)
+fprintf('\t[ %d permutations done ]', i_perm)
